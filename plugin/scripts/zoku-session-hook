@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+
+import { text } from 'node:stream/consumers';
+import { applySessionHook } from '../lib/hook.mjs';
+
+async function main() {
+  try {
+    let input = {};
+    try {
+      const raw = (await text(process.stdin)).trim();
+      if (raw) input = JSON.parse(raw);
+    } catch {
+      return;
+    }
+    if (!input || typeof input !== 'object' || Array.isArray(input)) return;
+    await applySessionHook(/** @type {Record<string, unknown>} */ (input), process.env);
+  } catch {
+    // Hooks must never break Claude.
+  }
+}
+
+main().finally(() => process.exit(0));

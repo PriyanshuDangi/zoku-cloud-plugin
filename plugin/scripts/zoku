@@ -1,0 +1,44 @@
+#!/usr/bin/env node
+
+import { parseArgs } from '../lib/args.mjs';
+import { CliError, safeErrorText } from '../lib/errors.mjs';
+import { runLogin, runLogout } from '../lib/login.mjs';
+import { runShare } from '../lib/share.mjs';
+
+const USAGE = `Usage:
+  zoku login
+  zoku logout
+  zoku share [--session-id <id>] [--push] [--pull] [--sync]`;
+
+async function main() {
+  const parsed = parseArgs(process.argv.slice(2));
+  if (parsed.help || !parsed.command) {
+    const stream = parsed.help ? process.stdout : process.stderr;
+    stream.write(`${USAGE}\n`);
+    if (!parsed.help) process.exit(1);
+    return;
+  }
+  if (parsed.command === 'login') {
+    await runLogin();
+    return;
+  }
+  if (parsed.command === 'logout') {
+    await runLogout();
+    return;
+  }
+  if (parsed.command === 'share') {
+    await runShare({
+      sessionId: parsed.sessionId,
+      allowPush: parsed.allowPush,
+      allowPull: parsed.allowPull,
+    });
+    return;
+  }
+  process.stderr.write(`${USAGE}\n`);
+  process.exit(1);
+}
+
+main().catch((err) => {
+  process.stderr.write(`${safeErrorText(err)}\n`);
+  process.exit(err instanceof CliError ? err.exitCode : 1);
+});
