@@ -9,7 +9,7 @@ The command to tell people is **`/zoku-cloud:share`**. Claude can also offer it 
 In Claude Code:
 
 ```text
-/plugin marketplace add <owner>/zoku-cloud-plugin
+/plugin marketplace add PriyanshuDangi/zoku-cloud-plugin
 /plugin install zoku-cloud@zoku
 ```
 
