@@ -1,5 +1,6 @@
 {
   "name": "zoku-cloud",
+  "displayName": "Zoku Cloud",
   "description": "Fork this Claude Code session to a Zoku Cloud room.",
   "version": "0.1.0",
   "author": {
@@ -7,5 +8,5 @@
     "url": "https://heyzoku.com"
   },
   "homepage": "https://cloud.heyzoku.com",
-  "repository": "https://github.com/PriyanshuDangi/zoku-plugin"
+  "repository": "https://github.com/PriyanshuDangi/zoku-cloud-plugin"
 }
